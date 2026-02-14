@@ -1,6 +1,5 @@
 import * as process from "node:process";
 import "dotenv/config";
-import { setupDb } from "./db";
 import { setupApp } from "./app";
 
 const PORT = process.env.PORT ?? 3000;
