@@ -12,10 +12,18 @@ export class JobOffersRepository {
     return row ?? null;
   }
 
-  async create() {}
-
   async existsMany(ids: string[]) {
+    if (!ids || ids.length === 0) return false;
 
-    return true;
+    const jobOfferIds = ids.map(() => "?").join(",");
+
+    const row = await this.db.get<{ count: number }>(
+      `SELECT COUNT(*) as count 
+     FROM JobOffer 
+     WHERE id IN (${jobOfferIds})`,
+      ids,
+    );
+
+    return (row?.count ?? 0) === ids.length;
   }
 }
